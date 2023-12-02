@@ -35,7 +35,6 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     public List<AccountTransferDto> findAllById(List<Long> ids) {
         final List<AccountTransferDto> accountTransferDtoList = new ArrayList<>();
-
         for (Long id : ids) {
             accountTransferDtoList.add(findById(id));
         }
@@ -51,7 +50,6 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     public AccountTransferDto findById(Long id) {
         final AccountTransferEntity accountTransfer = repository.findById(id)
                 .orElseThrow(() -> notFoundReturner.getEntityNotFoundException(id, MESSAGE));
-
         return mapper.toDto(accountTransfer);
     }
 
