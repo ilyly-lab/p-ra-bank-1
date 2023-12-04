@@ -20,5 +20,5 @@ spring:
   liquibase:
     default-schema: auth
     change-log: db/changelog/db.changelog-master-auth.yaml
-    enabled: true
-    drop-first: false
+    enabled: ${LIQUIBASE_ENABLED:true}
+    drop-first: ${LIQUIBASE_DROP_FIRST:false}
