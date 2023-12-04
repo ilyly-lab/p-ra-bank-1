@@ -3,6 +3,8 @@ package com.bank.publicinfo.controller;
 import com.bank.publicinfo.service.CertificateService;
 import com.bank.publicinfo.dto.CertificateDto;
 import com.bank.publicinfo.entity.CertificateEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/certificate")
+@Tag(name = "Сертификаты", description = "Позволяет управлять информацией о сертификатах")
 public class CertificateController {
 
     private final CertificateService service;
@@ -31,7 +34,11 @@ public class CertificateController {
      * @return {@link ResponseEntity}, {@link CertificateDto} и HttpStatus.OK
      */
     @GetMapping("/{id}")
-    private ResponseEntity<CertificateDto> readById(@PathVariable("id") Long id) {
+    @Operation(
+            summary = "Чтение записи",
+            description = "Позволяет получить информацию о сертификате по его id"
+    )
+    public ResponseEntity<CertificateDto> readById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -40,7 +47,11 @@ public class CertificateController {
      * @return {@link ResponseEntity}, лист {@link CertificateDto} и HttpStatus.OK
      */
     @GetMapping("/read/all")
-    private ResponseEntity<List<CertificateDto>> readAllById(@RequestParam List<Long> ids) {
+    @Operation(
+            summary = "Чтение набора записей",
+            description = "Позволяет получить список сертификатов по списку идентификаторов ids"
+    )
+    public ResponseEntity<List<CertificateDto>> readAllById(@RequestParam List<Long> ids) {
         return ResponseEntity.ok().body(service.findAllById(ids));
     }
 
@@ -49,7 +60,11 @@ public class CertificateController {
      * @return {@link ResponseEntity}, {@link CertificateDto} и HttpStatus.OK
      */
     @PostMapping("/create")
-    private ResponseEntity<CertificateDto> create(@RequestBody CertificateDto certificate) {
+    @Operation(
+            summary = "Создание записи",
+            description = "Позволяет создать новую запись о сертификате"
+    )
+    public ResponseEntity<CertificateDto> create(@RequestBody CertificateDto certificate) {
         return ResponseEntity.ok().body(service.create(certificate));
     }
 
@@ -59,7 +74,11 @@ public class CertificateController {
      * @return {@link ResponseEntity}, {@link CertificateDto} и HttpStatus.OK
      */
     @PutMapping("/update/{id}")
-    private ResponseEntity<CertificateDto> update(@PathVariable("id") Long id,
+    @Operation(
+            summary = "Обновление записи",
+            description = "Позволяет обновить информацию о сертификате по его id"
+    )
+    public ResponseEntity<CertificateDto> update(@PathVariable("id") Long id,
                                                   @RequestBody CertificateDto certificate) {
         return ResponseEntity.ok().body(service.update(id, certificate));
     }

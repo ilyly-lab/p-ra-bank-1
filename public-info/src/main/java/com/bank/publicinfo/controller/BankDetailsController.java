@@ -3,6 +3,8 @@ package com.bank.publicinfo.controller;
 import com.bank.publicinfo.dto.BankDetailsDto;
 import com.bank.publicinfo.entity.BankDetailsEntity;
 import com.bank.publicinfo.service.BankDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bank/details")
+@Tag(name = "Отделения банка", description = "Позволяет управлять информацией о отделениях банка")
 public class BankDetailsController {
 
     private final BankDetailsService service;
@@ -32,7 +35,11 @@ public class BankDetailsController {
      * @return {@link ResponseEntity}, {@link BankDetailsDto} и HttpStatus.OK
      */
     @GetMapping("/{id}")
-    private ResponseEntity<BankDetailsDto> readById(@PathVariable("id") Long id) {
+    @Operation(
+            summary = "Чтение записи",
+            description = "Позволяет получить информацию о отделении банка по его id"
+    )
+    public ResponseEntity<BankDetailsDto> readById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -41,7 +48,11 @@ public class BankDetailsController {
      * @return {@link ResponseEntity}, лист {@link BankDetailsDto} и HttpStatus.OK
      */
     @GetMapping("/read/all")
-    private ResponseEntity<List<BankDetailsDto>> readAllById(@RequestParam List<Long> ids) {
+    @Operation(
+            summary = "Чтение набора записей",
+            description = "Позволяет получить список отделений банка по списку идентификаторов ids"
+    )
+    public ResponseEntity<List<BankDetailsDto>> readAllById(@RequestParam List<Long> ids) {
         return ResponseEntity.ok().body(service.findAllById(ids));
     }
 
@@ -50,7 +61,11 @@ public class BankDetailsController {
      * @return {@link ResponseEntity}, {@link BankDetailsDto} и HttpStatus.OK
      */
     @PostMapping("/create")
-    private ResponseEntity<BankDetailsDto> create(@Valid @RequestBody BankDetailsDto bankDetails) {
+    @Operation(
+            summary = "Создание записи",
+            description = "Позволяет создать новую запись о отделении банка"
+    )
+    public ResponseEntity<BankDetailsDto> create(@Valid @RequestBody BankDetailsDto bankDetails) {
         return ResponseEntity.ok().body(service.create(bankDetails));
     }
 
@@ -60,7 +75,11 @@ public class BankDetailsController {
      * @return {@link ResponseEntity}, {@link BankDetailsDto} и HttpStatus.OK
      */
     @PutMapping("/update/{id}")
-    private ResponseEntity<BankDetailsDto> update(@PathVariable("id") Long id,
+    @Operation(
+            summary = "Обновление записи",
+            description = "Позволяет обновить информацию о отделении банка по его id"
+    )
+    public ResponseEntity<BankDetailsDto> update(@PathVariable("id") Long id,
                                                   @Valid @RequestBody BankDetailsDto bankDetails) {
         return ResponseEntity.ok().body(service.update(id, bankDetails));
     }

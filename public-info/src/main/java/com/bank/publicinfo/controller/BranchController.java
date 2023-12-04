@@ -4,6 +4,8 @@ import com.bank.publicinfo.service.BranchService;
 import com.bank.publicinfo.dto.BankDetailsDto;
 import com.bank.publicinfo.dto.BranchDto;
 import com.bank.publicinfo.entity.BranchEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/branch")
+@Tag(name = "Филиалы", description = "Позволяет управлять информацией о филиалах банка")
 public class BranchController {
 
     private final BranchService service;
@@ -32,7 +35,11 @@ public class BranchController {
      * @return {@link ResponseEntity}, {@link BankDetailsDto} и HttpStatus.OK
      */
     @GetMapping("/{id}")
-    private ResponseEntity<BranchDto> readById(@PathVariable("id") Long id) {
+    @Operation(
+            summary = "Чтение записи",
+            description = "Позволяет получить информацию о филиале по его id"
+    )
+    public ResponseEntity<BranchDto> readById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -41,7 +48,11 @@ public class BranchController {
      * @return {@link ResponseEntity}, лист {@link BranchDto} и HttpStatus.OK
      */
     @GetMapping("/read/all")
-    private ResponseEntity<List<BranchDto>> readAllById(@RequestParam List<Long> ids) {
+    @Operation(
+            summary = "Чтение набора записей",
+            description = "Позволяет получить список филиалов по списку идентификаторов ids"
+    )
+    public ResponseEntity<List<BranchDto>> readAllById(@RequestParam List<Long> ids) {
         return ResponseEntity.ok().body(service.findAllById(ids));
     }
 
@@ -50,7 +61,11 @@ public class BranchController {
      * @return {@link ResponseEntity}, {@link BranchDto} и HttpStatus.OK
      */
     @PostMapping("/create")
-    private ResponseEntity<BranchDto> create(@RequestBody BranchDto branch) {
+    @Operation(
+            summary = "Создание записи",
+            description = "Позволяет создать новую запись о филиале"
+    )
+    public ResponseEntity<BranchDto> create(@RequestBody BranchDto branch) {
         return ResponseEntity.ok().body(service.create(branch));
     }
 
@@ -60,7 +75,11 @@ public class BranchController {
      * @return {@link ResponseEntity}, {@link BranchDto} и HttpStatus.OK
      */
     @PutMapping("/update/{id}")
-    private ResponseEntity<BranchDto> update(@PathVariable("id") Long id,
+    @Operation(
+            summary = "Обновление записи",
+            description = "Позволяет обновить информацию о филиале по его id"
+    )
+    public ResponseEntity<BranchDto> update(@PathVariable("id") Long id,
                                              @RequestBody BranchDto branch) {
         return ResponseEntity.ok().body(service.update(id, branch));
     }
