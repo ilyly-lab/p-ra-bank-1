@@ -3,6 +3,8 @@ package com.bank.publicinfo.controller;
 import com.bank.publicinfo.dto.AtmDto;
 import com.bank.publicinfo.entity.AtmEntity;
 import com.bank.publicinfo.service.AtmService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/atm")
+@Tag(name = "Банкоматы", description = "Позволяет управлять информацией о банкоматах")
 public class AtmController {
 
     private final AtmService service;
@@ -31,7 +34,11 @@ public class AtmController {
      * @return {@link ResponseEntity}, {@link AtmDto} и HttpStatus.OK
      */
     @GetMapping("/{id}")
-    private ResponseEntity<AtmDto> readById(@PathVariable("id") Long id) {
+    @Operation(
+            summary = "Чтение записи",
+            description = "Позволяет получить информацию о банкомате по его id"
+    )
+    public ResponseEntity<AtmDto> readById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -40,7 +47,11 @@ public class AtmController {
      * @return {@link ResponseEntity},лист {@link AtmDto} и HttpStatus.OK
      */
     @GetMapping("/read/all")
-    private ResponseEntity<List<AtmDto>> readAllById(@RequestParam List<Long> ids) {
+    @Operation(
+            summary = "Чтение набора записей",
+            description = "Позволяет получить список банкоматов по списку идентификаторов ids"
+    )
+    public ResponseEntity<List<AtmDto>> readAllById(@RequestParam List<Long> ids) {
         return ResponseEntity.ok().body(service.findAllById(ids));
     }
 
@@ -49,7 +60,11 @@ public class AtmController {
      * @return {@link ResponseEntity}, {@link AtmDto} и HttpStatus.OK
      */
     @PostMapping("/create")
-    private ResponseEntity<AtmDto> create(@RequestBody AtmDto atm) {
+    @Operation(
+            summary = "Создание записи",
+            description = "Позволяет создать новую запись о банкомате"
+    )
+    public ResponseEntity<AtmDto> create(@RequestBody AtmDto atm) {
         return ResponseEntity.ok().body(service.create(atm));
     }
 
@@ -59,7 +74,11 @@ public class AtmController {
      * @return {@link ResponseEntity}, {@link AtmDto} и HttpStatus.OK
      */
     @PutMapping("/update/{id}")
-    private ResponseEntity<AtmDto> update(@PathVariable("id") Long id,
+    @Operation(
+            summary = "Обновление записи",
+            description = "Позволяет обновить информацию о банкомате по его id"
+    )
+    public ResponseEntity<AtmDto> update(@PathVariable("id") Long id,
                                           @RequestBody AtmDto atm) {
         return ResponseEntity.ok().body(service.update(id, atm));
     }

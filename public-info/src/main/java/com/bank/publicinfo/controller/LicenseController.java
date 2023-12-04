@@ -3,6 +3,8 @@ package com.bank.publicinfo.controller;
 import com.bank.publicinfo.dto.LicenseDto;
 import com.bank.publicinfo.entity.LicenseEntity;
 import com.bank.publicinfo.service.LicenseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/license")
+@Tag(name = "Лицензии", description = "Позволяет управлять информацией о лицензиях")
 public class LicenseController {
 
     private final LicenseService service;
@@ -31,7 +34,11 @@ public class LicenseController {
      * @return {@link ResponseEntity}, {@link LicenseDto} и HttpStatus.OK
      */
     @GetMapping("/{id}")
-    private ResponseEntity<LicenseDto> readById(@PathVariable("id") Long id) {
+    @Operation(
+            summary = "Чтение записи",
+            description = "Позволяет получить информацию о лицензии по ее id"
+    )
+    public ResponseEntity<LicenseDto> readById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -40,7 +47,11 @@ public class LicenseController {
      * @return {@link ResponseEntity}, лист {@link LicenseDto} и HttpStatus.OK
      */
     @GetMapping("/read/all")
-    private ResponseEntity<List<LicenseDto>> readAllById(@RequestParam List<Long> ids) {
+    @Operation(
+            summary = "Чтение набора записей",
+            description = "Позволяет получить список лицензий по списку идентификаторов ids"
+    )
+    public ResponseEntity<List<LicenseDto>> readAllById(@RequestParam List<Long> ids) {
         return ResponseEntity.ok().body(service.findAllById(ids));
     }
 
@@ -49,7 +60,11 @@ public class LicenseController {
      * @return {@link ResponseEntity}, {@link LicenseDto} и HttpStatus.OK
      */
     @PostMapping("/create")
-    private ResponseEntity<LicenseDto> create(@RequestBody LicenseDto license) {
+    @Operation(
+            summary = "Создание записи",
+            description = "Позволяет создать новую запись о лицензии"
+    )
+    public ResponseEntity<LicenseDto> create(@RequestBody LicenseDto license) {
         return ResponseEntity.ok().body(service.create(license));
     }
 
@@ -59,7 +74,11 @@ public class LicenseController {
      * @return {@link ResponseEntity}, {@link LicenseDto} и HttpStatus.OK
      */
     @PutMapping("/update/{id}")
-    private ResponseEntity<LicenseDto> update(@PathVariable("id") Long id,
+    @Operation(
+            summary = "Обновление записи",
+            description = "Позволяет обновить информацию о лицензии по ее id"
+    )
+    public ResponseEntity<LicenseDto> update(@PathVariable("id") Long id,
                                               @RequestBody LicenseDto license) {
         return ResponseEntity.ok().body(service.update(id, license));
     }
