@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Objects;
+
 
 /**
  * Dto для {@link HistoryEntity}.
@@ -27,4 +29,30 @@ public class HistoryDto {
     Long antiFraudAuditId;
     Long publicBankInfoAuditId;
     Long authorizationAuditId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final HistoryDto that = (HistoryDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(transferAuditId, that.transferAuditId) &&
+                Objects.equals(profileAuditId, that.profileAuditId) &&
+                Objects.equals(accountAuditId, that.accountAuditId) &&
+                Objects.equals(antiFraudAuditId, that.antiFraudAuditId) &&
+                Objects.equals(publicBankInfoAuditId, that.publicBankInfoAuditId) &&
+                Objects.equals(authorizationAuditId, that.authorizationAuditId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, transferAuditId, profileAuditId,
+                accountAuditId, antiFraudAuditId, publicBankInfoAuditId, authorizationAuditId);
+    }
+
+
 }
