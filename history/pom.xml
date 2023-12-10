@@ -18,7 +18,6 @@
         <java.version>17</java.version>
         <preliquibase.version>1.3.0</preliquibase.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
-        <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
